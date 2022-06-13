@@ -13,10 +13,10 @@ app = Flask(__name__)
 @app.route('/caminhoes', methods=["GET"])
 def get_caminhoes():
     lista_caminhoes = caminhoes_controller.get_caminhoes()    
-    print(lista_caminhoes)
-    return jsonify(caminhoes=lista_caminhoes)
     
-@app.route("/insert", methods=["POST"])
+    return jsonify(lista_caminhoes)
+    
+@app.route("/caminhao", methods=["POST"])
 def insert_caminhao():
     caminhao_details = request.get_json()
     descricao = caminhao_details["descricao"]
@@ -25,8 +25,8 @@ def insert_caminhao():
     result = caminhoes_controller.insert_caminhao(descricao, localizacao, status)
     return jsonify(result)
 
-@app.route("/alterar/<id>", methods=["PUT"])
-def update_caminhao(id=0):
+@app.route("/caminhao/<id>", methods=["PUT"])
+def update_caminhao(id):
     caminhao_details = request.get_json()
     id = caminhao_details["id"]
     descricao = caminhao_details["descricao"]

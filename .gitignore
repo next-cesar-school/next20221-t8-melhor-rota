@@ -30,6 +30,8 @@ share/python-wheels/
 *.egg
 *.db
 *.db-journal
+grafo*
+grafo2*
 MANIFEST
 
 # PyInstaller
