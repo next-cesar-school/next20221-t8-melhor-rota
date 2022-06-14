@@ -37,7 +37,7 @@ def delete_caminhao(id):
 def get_by_id(id):
     db = get_db_connection()
     cursor = db.cursor()
-    statement = "SELECT id, descricao, localizacao, status FROM caminhoes WHERE id = ?"
+    statement = "SELECT * FROM caminhoes WHERE id = ?"
     cursor.execute(statement, [id])
     return cursor.fetchone()
 

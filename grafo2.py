@@ -1,31 +1,9 @@
 import math
-from turtle import distance
 
 
 v = {"esc1", "esc2", "esc3", "desc1", "desc2", "desc3", "int1", "int2", "int3", "int4",
      "int5", "int6", "int7", "int8", "int9", "int10", "int11", "int12", "int3"}
 
-mapa = {"esc1" : {"int4" : 200},
-        "int4" : {"esc1": 200, "int5": 200, "int3" : 120},
-        "int5" : {"int4": 200, "int6": 100},
-        "int6" : {"int5": 100, "int7": 120},
-        "int7" : {"int6": 120, "esc3": 190, "int8": 210, "int13": 260},
-        "esc3" : {"int7": 190},
-        "int8" : {"int7": 210, "int2": 260, "int9": 250},
-        "int2" : {"int1": 270, "int3": 250, "int8": 260},
-        "int1" : {"int2": 270, "int3": 200, "desc1": 100},
-        "int3" : {"int2": 250, "int4": 120, "int1": 200},
-        "desc1": {"int1": 100},
-        "int9" : {"int10": 130, "int13": 90, "int11": 130},
-        "int10": {"int9": 130, "desc2": 140},
-        "desc2": {"int10": 140},
-        "int11": {"int9": 130, "esc2": 160, "int12" : 170},
-        "esc2" : {"int11": 160},
-        "int13": {"int7": 260, "int9": 90, "int12": 300},
-        "int12": {"int13": 300, "int11": 170, "desc3": 190},
-        "desc3": {"int12": 190}
-        }
-'''
 mapa = {"esc1" : {"int4" : 200},
         "int4" : {"esc1": 200, "int5": 200},
         "int5" : {"int4": 200, "int6": 100},
@@ -46,8 +24,6 @@ mapa = {"esc1" : {"int4" : 200},
         "int12": {"int13": 300, "int11": 170, "desc3": 190},
         "desc3": {"int12": 190}
         }
-'''
-
 #mapa = {"esc1" : [("int4", 200)],
 #        "int4" : [("esc1", 200), ("int5", 200)],
 #        "int5" : [("int4", 200), ("int6", 100)],
@@ -68,7 +44,7 @@ mapa = {"esc1" : {"int4" : 200},
 #        "int12": [("int13", 300), ("int11", 170), ("desc3", 190)],
 #        "desc3": [("int12", 190)]
 #        }
-class heapmin(dict):
+class heapmin:
     def __init__(self):
         self.__heap = []
         dict.__init__(self)
@@ -80,16 +56,14 @@ class heapmin(dict):
         while heap[0][1] not in self or self[heap[0][1]] != heap[0][0]:
             ultimoItem = heap.pop()
             pontoInsercao = 0
-            smallChild = 0           
-            while True:
-                smallChild = smallChild + 1
+            while 1:
+                smallChild = 2*pontoInsercao+1
                 if smallChild+1 < len(heap) and heap[smallChild] > heap[smallChild+1]:
                     smallChild += 1
                 if smallChild >= len(heap) or ultimoItem <= heap[smallChild]:
                     heap[pontoInsercao] = ultimoItem
                     break
                 heap[pontoInsercao] = heap[smallChild]
-                
         return heap[0][1]        
     def __iter__(self):
         def iterfn():
@@ -117,46 +91,37 @@ class heapmin(dict):
         if key not in self:
             self[key] = val
         return self[key]    
-
-
+        
+                    
 class grafo:
+    def __init__(self,gdict=None):
+        if gdict is None:
+            gdict = []
+        self.gdict = gdict
+
+    def getVertices(self):
+        return list(self.gdict.keys())
+
+    def edges(self):
+        return self.findedges()
+
+    def findedges(self):
+        edgename = []
+        for vrtx in self.gdict:
+            for nxtvrtx in self.gdict[vrtx]:
+                if (nxtvrtx, vrtx) not in edgename:
+                    edgename.append({vrtx, nxtvrtx})
+        return edgename    
     
-    def Dijkstra(G, start, end=None):
-        D = {}
-        P = {}
-        Q = heapmin()
+    def find_path(mapa_mina, start, end, path=[]):
         
-        Q[start] = 0
-        
-        for v in Q:
-            D[v] = Q[v]
-            if v == end: break
-
-            for w in G[v]:
-                vwLenght = D[v] + G[v][w]
-                
-                if w in D:
-                    pass
-                elif w not in Q or vwLenght < Q[w]:
-                    Q[w] = vwLenght    
-                    P[w] = v
-                    
-                    
-        return (D,P)            
-
-    def shortestPath(G, start, end):
-        D,P = grafo.Dijkstra(G, start, end)
-        
-        Path = []
-        while True:
-            
-            Path.append(end)
-            if end == start: break
-            end = P[end]
-            
-        Path.reverse()    
-        return Path
-
-#print(grafo.shortestPath(mapa, 'int2', 'desc3'))
-
-
+        if start == end:
+            return path
+        if not mapa_mina.has_key(start):
+            return None
+        for node in mapa_mina[start]:
+            if node not in path:
+                newpath = find_path(mapa_mina, node, end, path)
+            if newpath: return newpath
+            print(path)
+        return None    

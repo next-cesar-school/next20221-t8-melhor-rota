@@ -44,7 +44,13 @@ def delete_caminhao(id):
 @app.route("/caminhao/<id>", methods=["GET"])
 def get_caminhao_by_id(id):
     caminhao = caminhoes_controller.get_by_id(id)
-    return jsonify(caminhao)  
+    if caminhao[3] == "True":
+        status = "Caminhão está cheio, seguir para área de Descarregamento mais próxima!!!" 
+    else:
+        status = "Caminhão está vazio, seguir para escavadeira mais próxima!!!"             
+    return jsonify(caminhao, status)
+
+
 
 if __name__ == "__main__":
  #   init_db.create_tables()
