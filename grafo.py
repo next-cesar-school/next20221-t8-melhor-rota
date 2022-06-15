@@ -90,7 +90,8 @@ class heapmin(dict):
                     break
                 heap[pontoInsercao] = heap[smallChild]
                 
-        return heap[0][1]        
+        return heap[0][1]   
+             
     def __iter__(self):
         def iterfn():
             while len(self) > 0:
