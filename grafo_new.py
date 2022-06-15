@@ -1,9 +1,11 @@
-import math
 
 
+# Vertices do mapa da mina
 
 v = {"esc1", "esc2", "esc3", "desc1", "desc2", "desc3", "int1", "int2", "int3", "int4",
      "int5", "int6", "int7", "int8", "int9", "int10", "int11", "int12", "int3"}
+
+# Grafo do mapa da mina
 
 mapa = {"esc1" : {"int4" : 200},
         "int4" : {"esc1": 200, "int5": 200},
@@ -41,7 +43,8 @@ def find_all_paths(graph, start, end, path=[]):
             for newpath in newpaths:
                 paths.append(newpath)
     return paths
-'''
+
+# Função para pegar a menor rota com relação a sua distancia entre a soma dos pontos
 def menor_rota(lista_rotas):
     menor_ant = 9999999999999
     rota = []
@@ -60,49 +63,5 @@ def menor_rota(lista_rotas):
 
         if  menor < menor_ant:
             menor_ant = menor  
-            rota = lista_rotas[i] 
-    return menor, rota
-caminhao = input("Informar o caminhão a ser utilizado: ")
-if statusdocaminhao == True:
-    lista_rotas = find_all_paths(mapa, posicaocaminhao, 'desc1')
-    menor_desc1 = menor_rota(lista_rotas)
-    lista_rotas = find_all_paths(mapa, posicaocaminhao, 'desc2')
-    menor_desc2 = menor_rota(lista_rotas)
-    lista_rotas = find_all_paths(mapa, posicaocaminhao, 'desc3')
-    menor_desc2 = menor_rota(lista_rotas)
-else:
-    lista_rotas = find_all_paths(mapa, posicaocaminhao, 'esc1')
-    menor_esc1 = menor_rota(lista_rotas)
-    lista_rotas = find_all_paths(mapa, posicaocaminhao, 'esc2')
-    menor_esc2 = menor_rota(lista_rotas)
-    lista_rotas = find_all_paths(mapa, posicaocaminhao, 'esc3')
-    menor_desc2 = menor_rota(lista_rotas)        
-'''
-# chamada da função para armazenagem das rotas
-lista_rotas = find_all_paths(mapa, 'int5', 'esc1')
-
-# rotina para pegar a menor rota com relação a sua distancia entre a soma dos pontos
-
-menor_ant = 9999999999999
-rota = []
-for i in range(len(lista_rotas)):
-    menor = 0
-    for z in range(len(lista_rotas[i])-1):
-        
-        lista_2 = lista_rotas[i]
-        ponto1 = lista_2[z]
-
-        if z+1 < len(lista_rotas[i]):
-            ponto2 = lista_2[z+1]
-
-        valor = mapa[ponto1][ponto2]
-        menor = menor + valor
-
-    if  menor < menor_ant:
-        menor_ant = menor  
-        rota = lista_rotas[i] 
-
-# Imprimi a menor distancia e a rota seguida
-
-print(menor_ant)  
-print(rota)
+            rota = lista_rotas[i]
+    return menor_ant, rota         
