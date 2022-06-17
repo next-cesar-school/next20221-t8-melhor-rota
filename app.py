@@ -34,6 +34,7 @@ def update_caminhao(id):
     localizacao = caminhao_details["localizacao"]
     status = caminhao_details["status"]
     result = caminhoes_controller.update_caminhao(id, descricao, localizacao, status)
+    
     return jsonify(result)
 
 @app.route("/caminhao/<id>", methods=["DELETE"])
@@ -46,7 +47,6 @@ def delete_caminhao(id):
 def get_caminhao_by_id(id):
     caminhao = caminhoes_controller.get_by_id(id)
     
-    id = f'Id: {caminhao[0]}'
     descricao = f'Caminhão: {caminhao[1]}'
     localizacao = f'Localização: {caminhao[2]}'
         
@@ -78,10 +78,12 @@ def get_caminhao_by_id(id):
             retorna_menor = menor_esc2
         else:
             retorna_menor = menor_esc3            
-#    return jsonify(caminhao, status)
-    return jsonify(id, descricao, localizacao, status, retorna_menor)
+    menor = f'Distancia percorrida: {retorna_menor[0]}'
+    rota = f'Caminho Percorrido: {retorna_menor[1]}'
+
+    return jsonify(descricao, localizacao, status, menor, rota)
 
 
 if __name__ == "__main__":
- #   init_db.create_tables()
+    init_db.create_tables()
     app.run()

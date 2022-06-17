@@ -2,10 +2,9 @@ import sqlite3
 
 def get_db_connection():
     conn = sqlite3.connect('melhorrota.db')
-    #conn.row_factory = sqlite3.Row
     return conn
 
-# Comandos GET, POST, PUT
+# Comandos GET, POST, PUT, DELETE, GET ID
 
 def insert_caminhao(descricao, localizacao, status):
     db = get_db_connection()
@@ -13,17 +12,16 @@ def insert_caminhao(descricao, localizacao, status):
     statement = "INSERT INTO caminhoes(descricao, localizacao, status) VALUES (?, ?, ?)"
     cursor.execute(statement, [descricao, localizacao, status])
     db.commit()
-    return True
+    return "Inclusão realizada com sucesso."
 
 
 def update_caminhao(id, descricao, localizacao, status):
     db = get_db_connection()
     cursor = db.cursor()
-#    statement = "UPDATE caminhoes SET descricao = ?, localizacao = ?, status = ? WHERE id = ?"
     statement = "UPDATE caminhoes SET descricao = ?, localizacao = ?, status = ? WHERE id = ?"
     cursor.execute(statement, [descricao, localizacao, status, id])
     db.commit()
-    return True
+    return "Alteração realizada com sucesso"
 
 
 def delete_caminhao(id):
@@ -32,7 +30,7 @@ def delete_caminhao(id):
     statement = "DELETE FROM caminhoes WHERE id = ?"
     cursor.execute(statement, [id])
     db.commit()
-    return True
+    return "Caminhão Apagado com Sucesso"
 
 
 def get_by_id(id):

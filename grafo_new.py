@@ -3,7 +3,7 @@
 # Vertices do mapa da mina
 
 v = {"esc1", "esc2", "esc3", "desc1", "desc2", "desc3", "int1", "int2", "int3", "int4",
-     "int5", "int6", "int7", "int8", "int9", "int10", "int11", "int12", "int3"}
+     "int5", "int6", "int7", "int8", "int9", "int10", "int11", "int12", "int13"}
 
 # Grafo do mapa da mina
 
@@ -18,7 +18,7 @@ mapa = {"esc1" : {"int4" : 200},
         "int1" : {"int2": 270, "int3": 200, "desc1": 100},
         "int3" : {"int2": 250, "int4": 120},
         "desc1": {"int1": 100},
-        "int9" : {"int10": 130, "int13": 90, "int11": 130},
+        "int9" : {"int10": 130, "int13": 90, "int11": 130, "int8": 250},
         "int10": {"int9": 130, "desc2": 140},
         "desc2": {"int10": 140},
         "int11": {"int9": 130, "esc2": 160},
